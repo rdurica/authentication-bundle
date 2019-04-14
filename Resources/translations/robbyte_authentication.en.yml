@@ -1,0 +1,13 @@
+# UI
+ui.username: 'Username'
+ui.email: 'Email'
+ui.password: 'Password'
+ui.password_repeat: 'Repeat password'
+ui.terms_accepted: 'Terms accepted'
+
+#Buttons
+btn.login: 'Login'
+btn.register: 'Create account'
+
+# Flashes
+registration_success: 'Registration successful'
