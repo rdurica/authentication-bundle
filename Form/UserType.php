@@ -3,7 +3,7 @@
 namespace Rd\AuthenticationBundle\Form;
 
 use Rd\AuthenticationBundle\Entity\User;
-use Rd\Helper\BundleHelper;
+use Rd\AuthenticationBundle\Helper\BundleHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

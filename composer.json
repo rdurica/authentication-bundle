@@ -2,6 +2,7 @@
     "name": "rd/authentication-bundle",
     "description": "User management & authentication bundle",
     "type": "symfony-bundle",
+    "license": "MIT",
     "authors": [
         {"name": "Robert Durica", "email": "r.durica@gmail.com"}
     ],

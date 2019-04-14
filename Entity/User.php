@@ -2,7 +2,9 @@
 
 namespace Rd\AuthenticationBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -14,87 +16,109 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author  Robert Durica <r.durica@gmail.com>
  * @package Rd\AuthenticationBundle\Entity
  * @ORM\Table("rd_authentication_user")
- * @ORM\Entity(repositoryClass="Robbyte\AuthenticationBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="Rd\AuthenticationBundle\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User implements UserInterface, \Serializable, EquatableInterface
+class User implements UserInterface, Serializable, EquatableInterface
 {
 
     /**
+     * @var integer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
     private $id;
 
-
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string
+     * @ORM\Column(type="string", length=100, unique=true)
      */
     private $username;
 
-
     /**
-     * @ORM\Column(type="string", length=100, nullable=true, unique=true)
+     * @var string
+     * @ORM\Column(type="string", length=100, unique=true)
      */
     private $email;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=255)
      */
     private $password;
 
     /**
-     * @ORM\Column(type="boolean", options={"default": true})
-     */
-    private $isActive;
-
-    /**
+     * @var boolean
      * @ORM\Column(type="boolean", options={"default": false})
      */
-    private $isConfirmed;
+    private $active;
 
     /**
+     * @var string
      * @ORM\Column(type="string", options={"default": "ROLE_USER"})
      */
     private $roles;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", nullable=true, unique=false, length=255, options={"default" :null})
      */
     private $confirmHash;
 
     /**
+     * @var string
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
+    /**
+     * @var DateTime
+     * @ORM\Column(type="datetime")
+     */
+    private $registrationDate;
 
     /**
-     * User constructor.
+     * @var integer
+     * @ORM\Column(type="integer", options={"default": 0})
      */
+    private $resetPasswordCount;
+
+
     public function __construct()
     {
         $this->roles = 'ROLE_USER';
-        $this->isConfirmed = false;
+        $this->confirmHash = false;
+        $this->registrationDate = new DateTime();
+        $this->resetPasswordCount = 0;
     }
 
 
-    public function getId()
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
         return $this->id;
     }
 
 
-    public function getUsername(): ?string
+    /**
+     * @return string
+     */
+    public function getUsername(): string
     {
         return $this->username;
     }
 
 
-    public function setUsername(string $username): self
+    /**
+     * @param string $username
+     * @return User
+     */
+    public function setUsername(string $username): User
     {
         $this->username = $username;
 
@@ -103,30 +127,40 @@ class User implements UserInterface, \Serializable, EquatableInterface
 
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
 
     /**
-     * @param mixed $email
+     * @param string $email
+     * @return User
      */
-    public function setEmail($email): void
+    public function setEmail(string $email): User
     {
         $this->email = $email;
+
+        return $this;
     }
 
 
-    public function getPassword(): ?string
+    /**
+     * @return string
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
 
 
-    public function setPassword(string $password): self
+    /**
+     * @param string $password
+     * @return User
+     */
+    public function setPassword(string $password): User
     {
         $this->password = $password;
 
@@ -134,75 +168,140 @@ class User implements UserInterface, \Serializable, EquatableInterface
     }
 
 
-    public function getIsActive(): ?bool
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
     {
-        return $this->isActive;
+        return $this->active;
     }
 
 
-    public function setIsActive(bool $isActive): self
+    /**
+     * @param bool $active
+     * @return User
+     */
+    public function setActive(bool $active): User
     {
-        $this->isActive = $isActive;
+        $this->active = $active;
 
         return $this;
     }
 
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getPlainPassword()
+    public function getRoles(): string
     {
-        return $this->plainPassword;
+        return $this->roles;
     }
 
 
     /**
-     * @param mixed $plainPassword
+     * @param string $roles
+     * @return User
      */
-    public function setPlainPassword($plainPassword): void
+    public function setRoles(string $roles): User
     {
-        $this->plainPassword = $plainPassword;
+        $this->roles = $roles;
+
+        return $this;
     }
 
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getIsConfirmed()
-    {
-        return $this->isConfirmed;
-    }
-
-
-    /**
-     * @param mixed $isConfirmed
-     */
-    public function setIsConfirmed($isConfirmed): void
-    {
-        $this->isConfirmed = $isConfirmed;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getConfirmHash()
+    public function getConfirmHash(): ?string
     {
         return $this->confirmHash;
     }
 
 
     /**
-     * @param mixed $confirmHash
+     * @param string $confirmHash
+     * @return User
      */
-    public function setConfirmHash($confirmHash): void
+    public function setConfirmHash(string $confirmHash): User
     {
         $this->confirmHash = $confirmHash;
+
+        return $this;
     }
 
 
-    public function serialize()
+    /**
+     * @return string
+     */
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+
+    /**
+     * @param string $plainPassword
+     * @return User
+     */
+    public function setPlainPassword(string $plainPassword): User
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+
+    /**
+     * @return DateTime
+     */
+    public function getRegistrationDate(): DateTime
+    {
+        return $this->registrationDate;
+    }
+
+
+    /**
+     * @param DateTime $registrationDate
+     * @return User
+     */
+    public function setRegistrationDate(DateTime $registrationDate): User
+    {
+        $this->registrationDate = $registrationDate;
+
+        return $this;
+    }
+
+
+    /**
+     * @return int
+     */
+    public function getResetPasswordCount(): int
+    {
+        return $this->resetPasswordCount;
+    }
+
+
+    /**
+     * @param int $resetPasswordCount
+     * @return User
+     */
+    public function setResetPasswordCount(int $resetPasswordCount): User
+    {
+        $this->resetPasswordCount = $resetPasswordCount;
+
+        return $this;
+    }
+
+
+    /**
+     * String representation of object
+     *
+     * @link  https://php.net/manual/en/serializable.serialize.php
+     * @return string the string representation of the object or null
+     * @since 5.1.0
+     */
+    public function serialize(): string
     {
         return serialize([
             $this->id,
@@ -212,33 +311,19 @@ class User implements UserInterface, \Serializable, EquatableInterface
     }
 
 
-    public function unserialize($serialized)
+    /**
+     * Constructs the object
+     *
+     * @link  https://php.net/manual/en/serializable.unserialize.php
+     * @param string $serialized <p>
+     *                           The string representation of the object.
+     *                           </p>
+     * @return void
+     * @since 5.1.0
+     */
+    public function unserialize($serialized): void
     {
         list ($this->id, $this->email, $this->password,) = unserialize($serialized, ['allowed_classes' => false]);
-    }
-
-
-    public function getRoles()
-    {
-        return [$this->roles];
-    }
-
-
-    public function setRoles(string $role)
-    {
-        $this->roles = $role;
-    }
-
-
-    public function getSalt()
-    {
-        return 'T4suXsYv0UZwQSQvXx6N';
-    }
-
-
-    public function eraseCredentials()
-    {
-
     }
 
 
@@ -247,26 +332,45 @@ class User implements UserInterface, \Serializable, EquatableInterface
      * nor by comparing identities (i.e. getId() === getId()).
      * However, you do not need to compare every attribute, but only those that
      * are relevant for assessing whether re-authentication is required.
-     * Also implementation should consider that $user instance may implement
-     * the extended user interface `AdvancedUserInterface`.
      *
      * @param UserInterface $user
      * @return bool
      */
-    public function isEqualTo(UserInterface $user)
+    public function isEqualTo(UserInterface $user): bool
     {
         if ($this->password !== $user->getPassword()) {
             return false;
         }
-
         if ($this->getSalt() !== $user->getSalt()) {
             return false;
         }
-
         if ($this->email !== $user->getEmail()) {
             return false;
         }
 
         return true;
+    }
+
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+
+    /**
+     * Removes sensitive data from the user.
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials(): void
+    {
+        $this->plainPassword = null;
     }
 }

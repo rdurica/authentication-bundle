@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Rd\Helper;
+namespace Rd\AuthenticationBundle\Helper;
 
 /**
  * Class BundleHelper

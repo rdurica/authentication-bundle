@@ -4,12 +4,12 @@ Update
 ``` yaml
 security:
     encoders:
-        Robbyte\AuthenticationBundle\Entity\User:
+        Rd\AuthenticationBundle\Entity\User:
             algorithm: bcrypt
     providers:
         database_provider:
             entity:
-                class: Robbyte\AuthenticationBundle\Entity\User
+                class: Rd\AuthenticationBundle\Entity\User
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -18,11 +18,11 @@ security:
             anonymous: ~
             provider: database_provider
             form_login:
-                login_path: robbyte_authentication_login
-                check_path: robbyte_authentication_login
+                login_path: rd_authentication_login
+                check_path: rd_authentication_login
                 csrf_token_generator: security.csrf.token_manager
             logout:
-                path: robbyte_authentication_logout
+                path: rd_authentication_logout
                 target: /
 ```
 
