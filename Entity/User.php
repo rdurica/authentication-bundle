@@ -4,6 +4,7 @@ namespace Rd\AuthenticationBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\EquatableInterface;
@@ -56,6 +57,12 @@ class User implements UserInterface, Serializable, EquatableInterface
     private $active;
 
     /**
+     * @var boolean
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $confirmed;
+
+    /**
      * @var string
      * @ORM\Column(type="string", options={"default": "ROLE_USER"})
      */
@@ -87,10 +94,17 @@ class User implements UserInterface, Serializable, EquatableInterface
     private $resetPasswordCount;
 
 
+    /**
+     * User constructor.
+     *
+     * @throws Exception
+     */
     public function __construct()
     {
         $this->roles = 'ROLE_USER';
         $this->confirmHash = false;
+        $this->active = true;
+        $this->confirmed = false;
         $this->registrationDate = new DateTime();
         $this->resetPasswordCount = 0;
     }
@@ -108,7 +122,7 @@ class User implements UserInterface, Serializable, EquatableInterface
     /**
      * @return string
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -129,7 +143,7 @@ class User implements UserInterface, Serializable, EquatableInterface
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -150,7 +164,7 @@ class User implements UserInterface, Serializable, EquatableInterface
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -234,7 +248,7 @@ class User implements UserInterface, Serializable, EquatableInterface
     /**
      * @return string
      */
-    public function getPlainPassword(): string
+    public function getPlainPassword(): ?string
     {
         return $this->plainPassword;
     }
@@ -289,6 +303,27 @@ class User implements UserInterface, Serializable, EquatableInterface
     public function setResetPasswordCount(int $resetPasswordCount): User
     {
         $this->resetPasswordCount = $resetPasswordCount;
+
+        return $this;
+    }
+
+
+    /**
+     * @return bool
+     */
+    public function isConfirmed(): ?bool
+    {
+        return $this->confirmed;
+    }
+
+
+    /**
+     * @param bool $confirmed
+     * @return User
+     */
+    public function setConfirmed(bool $confirmed): User
+    {
+        $this->confirmed = $confirmed;
 
         return $this;
     }

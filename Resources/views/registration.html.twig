@@ -6,9 +6,63 @@
         <div class="col-md-6">
             <div class="card mx-4">
                 <div class="card-body p-4">
-                    <h1>Register</h1>
-                    <p class="text-muted">Create your account</p>
-
+                    <div class="row">
+                        <h1>Register</h1>
+                        <p class="text-muted">Create your account</p>
+                        {{ form_start(form) }}
+                        <div class="row clearfix wow fadeIn">
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <label class="form-label">{{ 'username'|trans }}</label>
+                                        {{ form_errors(form.username) }}
+                                        {{ form_widget(form.username, {'attr': {'class' : 'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <label class="form-label">{{ 'email'|trans }}</label>
+                                        {{ form_errors(form.email) }}
+                                        {{ form_widget(form.email, {'attr': {'class' : 'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <label class="form-label">{{ 'password'|trans }}</label>
+                                        {{ form_errors(form.plainPassword.first) }}
+                                        {{ form_widget(form.plainPassword.first, {'attr': {'class' : 'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <label class="form-label">{{ 'password_second'|trans }}</label>
+                                        {{ form_errors(form.plainPassword.second) }}
+                                        {{ form_widget(form.plainPassword.second, {'attr': {'class' : 'form-control'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group form-float">
+                                    <div class="form-line">
+                                        <a href="#"
+                                           target="_blank">{{ 'conditions'|trans }}</a><br><br>
+                                        <label class="form-label">{{ 'conditions_accepted'|trans }}</label>
+                                        {{ form_errors(form.termsAccepted) }}
+                                        {{ form_widget(form.termsAccepted) }}
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                        class="btn btn-info pull-left">{{ 'register'|trans }}</button>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
                 </div>
             </div>
         </div>
