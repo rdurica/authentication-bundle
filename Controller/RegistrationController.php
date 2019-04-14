@@ -4,12 +4,11 @@ namespace Rd\AuthenticationBundle\Controller;
 
 use Rd\AuthenticationBundle\Entity\User;
 use Rd\AuthenticationBundle\Form\UserType;
-use Rd\AuthenticationBundle\Helper\BundleHelper;
+use Rd\AuthenticationBundle\Service\AuthenticationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class RegistrationController
@@ -19,26 +18,21 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class RegistrationController extends AbstractController
 {
+
     /**
      * @Route("/registration", name="rd_authentication_registration")
-     * @param Request                      $request
-     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param Request                 $request
+     * @param AuthenticationInterface $authentication
      * @return Response
      * @throws \Exception
      */
-    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function index(Request $request, AuthenticationInterface $authentication): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-            $user->setConfirmHash(BundleHelper::generateString());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $authentication->register($user);
 
             return $this->redirect('/');
         }
