@@ -33,3 +33,10 @@ framework:
     secret: '%env(APP_SECRET)%'
     csrf_protection: true
 ```
+Update 
+<code>config/routes/annotation.yaml</code>
+``` yaml
+rd_authentication:
+    resource: ../../vendor/rd/authentication-bundle/Controller/
+    type: annotation
+```

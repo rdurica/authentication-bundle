@@ -3,7 +3,7 @@
 namespace Rd\AuthenticationBundle\Form;
 
 use Rd\AuthenticationBundle\Entity\User;
-use Rd\AuthenticationBundle\Helper\RobbyteAuthenticationHelper;
+use Rd\Helper\BundleHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -31,25 +31,25 @@ class UserType extends AbstractType
     {
         $builder->add('username', TextType::class, [
             'label'              => 'ui.username',
-            'translation_domain' => RobbyteAuthenticationHelper::TRANS_DOMAIN,
+            'translation_domain' => BundleHelper::TRANS_DOMAIN,
         ])->add('email', EmailType::class, [
             'label'              => 'ui.email',
-            'translation_domain' => RobbyteAuthenticationHelper::TRANS_DOMAIN,
+            'translation_domain' => BundleHelper::TRANS_DOMAIN,
         ])->add('plainPassword', RepeatedType::class, [
             'type'           => PasswordType::class,
             'first_options'  => [
                 'label'              => 'ui.password',
-                'translation_domain' => RobbyteAuthenticationHelper::TRANS_DOMAIN,
+                'translation_domain' => BundleHelper::TRANS_DOMAIN,
             ],
             'second_options' => [
                 'label'              => 'ui.password_repeat',
-                'translation_domain' => RobbyteAuthenticationHelper::TRANS_DOMAIN,
+                'translation_domain' => BundleHelper::TRANS_DOMAIN,
             ],
         ])->add('termsAccepted', CheckboxType::class, [
             'mapped'             => false,
             'constraints'        => new IsTrue(),
             'label'              => 'ui.terms_accepted',
-            'translation_domain' => RobbyteAuthenticationHelper::TRANS_DOMAIN,
+            'translation_domain' => BundleHelper::TRANS_DOMAIN,
         ]);
     }
 
