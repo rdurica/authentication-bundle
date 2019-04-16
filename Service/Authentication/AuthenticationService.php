@@ -1,10 +1,15 @@
 <?php declare(strict_types=1);
 
-namespace Rd\AuthenticationBundle\Service;
+namespace Rd\AuthenticationBundle\Service\Authentication;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Rd\AuthenticationBundle\Entity\User;
+use Rd\AuthenticationBundle\Event\UserEvent;
+use Rd\AuthenticationBundle\Helper\BundleHelper;
+use Rd\AuthenticationBundle\Service\AbstractService;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -26,11 +31,15 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
      * AuthenticationService constructor.
      *
      * @param EntityManagerInterface       $em
+     * @param EventDispatcherInterface     $eventDispatcher
      * @param UserPasswordEncoderInterface $passwordEncoder
      */
-    public function __construct(EntityManagerInterface $em, UserPasswordEncoderInterface $passwordEncoder)
-    {
-        parent::__construct($em);
+    public function __construct(
+        EntityManagerInterface $em,
+        EventDispatcherInterface $eventDispatcher,
+        UserPasswordEncoderInterface $passwordEncoder
+    ) {
+        parent::__construct($em, $eventDispatcher);
         $this->passwordEncoder = $passwordEncoder;
     }
 
@@ -47,8 +56,12 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
         $user->setPassword($password);
         $user->setConfirmHash($this->generateHash());
 
+        $event = new GenericEvent($user);
         $this->em->persist($user);
+
         $this->em->flush();
+
+        $this->eventDispatcher->dispatch(BundleHelper::EVENT_REGISTRATION_SUCCEED, $event);
     }
 
 

@@ -3,7 +3,11 @@ services:
         autowire: true
     Rd\AuthenticationBundle\:
         resource: '../../*'
-        exclude: '../{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../{DependencyInjection,Entity,Migrations,Tests}'
     Rd\AuthenticationBundle\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
+
+    # Subscribers
+    Rd\AuthenticationBundle\EventSubscriber\AuthenticationSubscriber:
+        tags: ['kernel.event_subscriber']

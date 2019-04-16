@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Rd\AuthenticationBundle\Service;
+namespace Rd\AuthenticationBundle\Service\Authentication;
 
 use Rd\AuthenticationBundle\Entity\User;
 
