@@ -42,11 +42,11 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
     {
         return $this->createQueryBuilder('u')
                     ->where('u.email = :email')
-                    ->andWhere('u.isActive = :isActive')
-                    ->andWhere('u.isConfirmed = :isConfirmed')
+                    ->andWhere('u.active = :active')
+                    ->andWhere('u.confirmed = :confirmed')
                     ->setParameter('email', $username)
-                    ->setParameter('isActive', true)
-                    ->setParameter('isConfirmed', true)
+                    ->setParameter('active', true)
+                    ->setParameter('confirmed', true)
                     ->getQuery()
                     ->getOneOrNullResult();
     }

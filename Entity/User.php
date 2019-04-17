@@ -204,11 +204,11 @@ class User implements UserInterface, Serializable, EquatableInterface
 
 
     /**
-     * @return string
+     * @return array
      */
-    public function getRoles(): string
+    public function getRoles(): array
     {
-        return $this->roles;
+        return [$this->roles];
     }
 
 
