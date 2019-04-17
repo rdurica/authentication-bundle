@@ -1,4 +1,26 @@
-### Instalation
+RD Authentication Bundle
+------------
+
+![Packagist](https://img.shields.io/packagist/l/rd/authentication-bundle.svg?style=flat-square)
+![PHP from Packagist](https://img.shields.io/packagist/php-v/rd/authentication-bundle.svg?style=flat-square)
+![GitHub last commit](https://img.shields.io/github/last-commit/rdurica/authentication-bundle.svg?style=flat-square)
+![GitHub release](https://img.shields.io/github/release/rdurica/authentication-bundle.svg?style=flat-square)
+
+Requirements
+------------
+
+Requires Symfony  4.2.*
+
+
+Installation
+------------
+
+Install bundle with 
+[Composer](http://getcomposer.org/):
+
+```sh
+$ composer require rd/authentication-bundle
+```
 Update
 <code>config/packages/security.yaml</code>
 ``` yaml
