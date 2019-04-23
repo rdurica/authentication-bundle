@@ -1,0 +1,6 @@
+{% extends '@RdAuthentication/mail/mail_template.html.twig' %}
+{% block body %}
+    <h4>Hello,</h4>
+    <p>Thank you for registration. To confirm your account please visit link bellow.</p>
+    <p><a href="https://yourpage.net/confirm-account/{{ user.getConfirmHash() }}">Confirmation link</a></p>
+{% endblock %}

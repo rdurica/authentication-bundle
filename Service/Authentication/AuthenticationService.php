@@ -5,6 +5,7 @@ namespace Rd\AuthenticationBundle\Service\Authentication;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Rd\AuthenticationBundle\Entity\User;
+use Rd\AuthenticationBundle\Event;
 use Rd\AuthenticationBundle\Event\UserEvent;
 use Rd\AuthenticationBundle\Helper\BundleHelper;
 use Rd\AuthenticationBundle\Service\AbstractService;
@@ -61,7 +62,7 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
 
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(BundleHelper::EVENT_REGISTRATION_SUCCEED, $event);
+        $this->eventDispatcher->dispatch(Event::REGISTRATION_SUCCEED, $event);
     }
 
 

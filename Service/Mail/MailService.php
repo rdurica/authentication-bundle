@@ -65,7 +65,7 @@ class MailService extends AbstractService implements MailInterface
                 ->setTo($user->getEmail())
                 ->setBody($this->twig->render('@RdAuthentication/mail/registration_successful.html.twig', [
                     'user' => $user,
-                ]));
+                ]), 'text/html');
 
         $this->mailer->send($message);
     }
@@ -87,29 +87,7 @@ class MailService extends AbstractService implements MailInterface
                 ->setTo($user->getEmail())
                 ->setBody($this->twig->render('@RdAuthentication/mail/reset_password.html.twig', [
                     'user' => $user,
-                ]));
-
-        $this->mailer->send($message);
-    }
-
-
-    /**
-     * Generate new email with link to restore password
-     *
-     * @param User $user
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     */
-    public function forgottenPassword(User $user): void
-    {
-        $message = new Swift_Message();
-        $message->setSubject('Forgotten password')
-                ->setFrom('test@test.net')
-                ->setTo($user->getEmail())
-                ->setBody($this->twig->render('@RdAuthentication/mail/forgotten_password.html.twig', [
-                    'user' => $user,
-                ]));
+                ]), 'text/html');
 
         $this->mailer->send($message);
     }
@@ -131,7 +109,7 @@ class MailService extends AbstractService implements MailInterface
                 ->setTo($user->getEmail())
                 ->setBody($this->twig->render('@RdAuthentication/mail/password_changed.html.twig', [
                     'user' => $user,
-                ]));
+                ]), 'text/html');
 
         $this->mailer->send($message);
     }
@@ -153,7 +131,7 @@ class MailService extends AbstractService implements MailInterface
                 ->setTo($user->getEmail())
                 ->setBody($this->twig->render('@RdAuthentication/mail/account_verified.html.twig', [
                     'user' => $user,
-                ]));
+                ]), 'text/html');
 
         $this->mailer->send($message);
     }

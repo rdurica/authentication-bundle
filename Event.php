@@ -15,4 +15,24 @@ final class Event
      * @var string
      */
     public const REGISTRATION_SUCCEED = 'rd.authentication.registrationSucceed';
+
+
+    /**
+     * @Event(Symfony\Component\EventDispatcher\GenericEvent")
+     * @var string
+     */
+    public const LOST_PASSWORD = 'rd.authentication.lostPassword';
+
+    /**
+     * @Event(Symfony\Component\EventDispatcher\GenericEvent")
+     * @var string
+     */
+    public const PASSWORD_CHANGED = 'rd.authentication.passwordChanged';
+
+
+    /**
+     * @Event(Symfony\Component\EventDispatcher\GenericEvent")
+     * @var string
+     */
+    public const ACCOUNT_VERIFIED = 'rd.authentication.accountVerified';
 }

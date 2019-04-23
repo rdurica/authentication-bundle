@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<style>
+    html {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+        background-color: #ebebeb;
+        color: white;
+        padding-left: 70px;
+        padding-right: 70px;
+        padding-top: 20px;
+    }
+
+    .page {
+        background-color: white;
+        color: #383838;
+        min-height: 100%;
+        box-shadow: 1px 2px 5px silver;
+    }
+
+    .page-header {
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+        padding: 1px;
+    }
+
+    .page-body {
+        padding-top: 10px;
+        padding-left: 30px;
+        padding-right: 30px;
+        padding-bottom: 80vh;
+    }
+
+    .page-footer {
+        text-align: center;
+        padding: 10px;
+    }
+</style>
+<body>
+<div class="page">
+    <div class="page-header">
+        <h1>Application name</h1>
+    </div>
+    <div class="page-body">
+        {% block body %}{% endblock %}
+    </div>
+</div>
+<div class="page-footer">
+    <a href="yourpage.net" target="_blank">www.yourpage.net</a>
+</div>
+</body>
+</html>

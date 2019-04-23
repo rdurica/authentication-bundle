@@ -42,7 +42,43 @@ class AuthenticationSubscriber implements EventSubscriberInterface
     {
         return [
             Event::REGISTRATION_SUCCEED => 'registrationSucceed',
+            Event::ACCOUNT_VERIFIED     => 'accountVerified',
+            Event::PASSWORD_CHANGED     => 'passwordChanged',
+            Event::LOST_PASSWORD        => 'lostPassword',
         ];
+    }
+
+
+    /**
+     * @param GenericEvent $event
+     */
+    public function lostPassword(GenericEvent $event): void
+    {
+        /** @var User $user */
+        $user = $event->getSubject();
+        $this->mail->resetPassword($user);
+    }
+
+
+    /**
+     * @param GenericEvent $event
+     */
+    public function passwordChanged(GenericEvent $event): void
+    {
+        /** @var User $user */
+        $user = $event->getSubject();
+        $this->mail->passwordChanged($user);
+    }
+
+
+    /**
+     * @param GenericEvent $event
+     */
+    public function accountVerified(GenericEvent $event): void
+    {
+        /** @var User $user */
+        $user = $event->getSubject();
+        $this->mail->accountVerified($user);
     }
 
 

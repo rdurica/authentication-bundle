@@ -3,7 +3,6 @@
 namespace Rd\AuthenticationBundle\Controller;
 
 use Rd\AuthenticationBundle\Entity\User;
-use Rd\AuthenticationBundle\Event\UserEvent;
 use Rd\AuthenticationBundle\Form\UserType;
 use Rd\AuthenticationBundle\Service\Authentication\AuthenticationInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -31,14 +31,6 @@ interface MailInterface
 
 
     /**
-     * Generate new email with link to restore password
-     *
-     * @param User $user
-     */
-    public function forgottenPassword(User $user): void;
-
-
-    /**
      * Send email if user change password
      *
      * @param User $user
