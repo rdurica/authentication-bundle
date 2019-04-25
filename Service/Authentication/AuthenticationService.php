@@ -100,10 +100,30 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
      * Create new password link & send email
      *
      * @param string $email
+     * @throws AccountNotFoundException
      */
     public function regeneratePassword(string $email): void
     {
 
+        /** @var User|null $user */
+        $user = $this->em->getRepository(User::class)->findOneBy([
+            'email'     => $email,
+            'confirmed' => true,
+            'active'    => true,
+        ]);
+
+        if (!$user) {
+            throw new AccountNotFoundException();
+        }
+
+        $user->setConfirmHash($this->generateHash(69));
+        $user->setResetPasswordCount($user->getResetPasswordCount() + 1);
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $event = new GenericEvent($user);
+        $this->eventDispatcher->dispatch(Event::LOST_PASSWORD, $event);
     }
 
 

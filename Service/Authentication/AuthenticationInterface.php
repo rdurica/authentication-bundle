@@ -36,6 +36,7 @@ interface AuthenticationInterface
      * Create new password link & send email
      *
      * @param string $email
+     * @throws AccountNotFoundException
      */
     public function regeneratePassword(string $email): void;
 
