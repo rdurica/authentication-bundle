@@ -7,7 +7,7 @@
             margin-top: auto;
             margin-bottom: auto;
             width: 450px;
-            background-color: rgba(0, 0, 0, 0.5) !important;
+            /*background-color: rgba(0, 0, 0, 0.5) !important;*/
         }
         .modal-content{
             /*height: 630px;*/
@@ -15,12 +15,12 @@
             /*margin-bottom: auto;*/
             /*margin: auto;*/
             /*width: 700px;*/
-            background-color: rgba(0, 0, 0, 0.7) !important;
-            color: white;
+            /*background-color: rgba(0, 0, 0, 0.7) !important;*/
+            color: grey;
         }
 
         p, label {
-            color: white;
+            color: grey;
             float: left;
         }
 
@@ -31,10 +31,8 @@
     <div class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
-                <div class="card-header">
-                    <h3>Sign Up</h3>
-                </div>
                 <div class="card-body">
+                    <h3 class="text-center">Sign Up</h3>
                     {{ form_start(form) }}
                     <p>Username </p>
                     <span class="error">{{ form_errors(form.username) }}</span>
@@ -83,7 +81,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
-                        Already have an account?<a href="{{ path('rd_authentication_login') }}">Sign In</a>
+                       <span style="color: grey;">Already have an account?</span> <a href="{{ path('rd_authentication_login') }}">Sign In</a>
                     </div>
                 </div>
             </div>
