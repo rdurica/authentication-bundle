@@ -3,6 +3,7 @@
 namespace Rd\AuthenticationBundle\Service\Authentication;
 
 use Rd\AuthenticationBundle\Entity\User;
+use Rd\AuthenticationBundle\Exception\AccountNotFoundException;
 
 /**
  * Interface AuthenticationInterface
@@ -26,6 +27,7 @@ interface AuthenticationInterface
      * Confirm account after registration
      *
      * @param string $hash
+     * @throws AccountNotFoundException
      */
     public function confirmAccount(string $hash): void;
 

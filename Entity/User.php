@@ -237,7 +237,7 @@ class User implements UserInterface, Serializable, EquatableInterface
      * @param string $confirmHash
      * @return User
      */
-    public function setConfirmHash(string $confirmHash): User
+    public function setConfirmHash(?string $confirmHash): User
     {
         $this->confirmHash = $confirmHash;
 

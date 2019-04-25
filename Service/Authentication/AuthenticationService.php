@@ -7,7 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Rd\AuthenticationBundle\Entity\User;
 use Rd\AuthenticationBundle\Event;
 use Rd\AuthenticationBundle\Event\UserEvent;
-use Rd\AuthenticationBundle\Helper\BundleHelper;
+use Rd\AuthenticationBundle\Exception\AccountNotFoundException;
 use Rd\AuthenticationBundle\Service\AbstractService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -70,10 +70,29 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
      * Confirm account after registration
      *
      * @param string $hash
+     * @throws AccountNotFoundException
      */
     public function confirmAccount(string $hash): void
     {
+        /** @var User|null $user */
+        $user = $this->em->getRepository(User::class)->findOneBy([
+            'confirmHash' => $hash,
+            'active'      => true,
+            'confirmed'   => false,
+        ]);
 
+        if (!$user) {
+            throw  new AccountNotFoundException();
+        }
+
+        $user->setConfirmed(true);
+        $user->setConfirmHash(null);
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $event = new GenericEvent($user);
+        $this->eventDispatcher->dispatch(Event::ACCOUNT_VERIFIED, $event);
     }
 
 
