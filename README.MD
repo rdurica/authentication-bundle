@@ -6,11 +6,20 @@ RD Authentication Bundle
 ![GitHub last commit](https://img.shields.io/github/last-commit/rdurica/authentication-bundle.svg?style=flat-square)
 ![GitHub release](https://img.shields.io/github/release/rdurica/authentication-bundle.svg?style=flat-square)
 
-Requirements
+Overview
 ------------
 
-Requires Symfony  4.2.*
+- Registration
+- Account verify
+- Login & logout
+- Reset password
 
+This is fully configured bundle. Just install & copy/paste configuration.
+
+Preview
+------------
+![Untitled](https://user-images.githubusercontent.com/16089770/56792275-8660dc80-6809-11e9-8f71-8fd507424eb8.png)
+![Untitled2](https://user-images.githubusercontent.com/16089770/56792479-fec79d80-6809-11e9-9fc3-fe1dfd9cce9b.png)
 
 Installation
 ------------
