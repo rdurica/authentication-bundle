@@ -135,7 +135,16 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
      */
     public function changePassword(User $user, string $newPassword): void
     {
+        $password = $this->passwordEncoder->encodePassword($user, $newPassword);
 
+        $user->setPassword($password);
+        $user->setConfirmHash(null);
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $event = new GenericEvent($user);
+        $this->eventDispatcher->dispatch(Event::PASSWORD_CHANGED, $event);
     }
 
 
