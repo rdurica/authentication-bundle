@@ -1,6 +1,6 @@
 {
     "name": "authentication-bundle",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "Registration,Login & Reset password bundle",
     "repository": {
         "type": "git",

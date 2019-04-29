@@ -4,7 +4,10 @@
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
-        {"name": "Robert Durica", "email": "r.durica@gmail.com"}
+        {
+            "name": "Robert Durica",
+            "email": "r.durica@gmail.com"
+        }
     ],
     "autoload": {
         "psr-4": {
@@ -20,5 +23,6 @@
         "symfony/swiftmailer-bundle": "^3.1",
         "symfony/translation": "4.2.*",
         "symfony/twig-bundle": "4.2.*"
-    }
+    },
+    "version": "0.1.0"
 }
