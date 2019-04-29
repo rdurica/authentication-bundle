@@ -1,0 +1,15 @@
+{
+    "name": "authentication-bundle",
+    "version": "0.0.1",
+    "description": "Registration,Login & Reset password bundle",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rdurica/authentication-bundle.git"
+    },
+    "author": "Robert Durica",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/rdurica/authentication-bundle/issues"
+    },
+    "homepage": "https://github.com/rdurica/authentication-bundle#readme"
+}

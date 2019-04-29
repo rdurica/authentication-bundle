@@ -71,3 +71,8 @@ rd_authentication:
     resource: ../../vendor/rd/authentication-bundle/Controller/
     type: annotation
 ```
+
+Update database schema
+```sh
+$ bin/console doctrine:schema:update --force
+```
