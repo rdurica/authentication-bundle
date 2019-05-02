@@ -2,6 +2,8 @@
 
 namespace Rd\AuthenticationBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Rd\AuthenticationBundle\Entity\Condition;
 use Rd\AuthenticationBundle\Entity\User;
 use Rd\AuthenticationBundle\Form\UserType;
 use Rd\AuthenticationBundle\Service\Authentication\AuthenticationInterface;
@@ -23,11 +25,15 @@ class RegistrationController extends AbstractController
      * @Route("/registration", name="rd_authentication_registration")
      * @param Request                 $request
      * @param AuthenticationInterface $authentication
+     * @param EntityManagerInterface  $em
      * @return Response
      * @throws \Exception
      */
-    public function index(Request $request, AuthenticationInterface $authentication): Response
-    {
+    public function index(
+        Request $request,
+        AuthenticationInterface $authentication,
+        EntityManagerInterface $em
+    ): Response {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -37,8 +43,12 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('rd_authentication_login');
         }
 
+        /** @var Condition $conditions */
+        $conditions = $em->getRepository(Condition::class)->find(1);
+
         return $this->render('@RdAuthentication/registration.html.twig', [
-            'form' => $form->createView(),
+            'form'       => $form->createView(),
+            'conditions' => $conditions,
         ]);
     }
 }
