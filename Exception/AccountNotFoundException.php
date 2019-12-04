@@ -10,6 +10,6 @@ namespace Rd\AuthenticationBundle\Exception;
  */
 class AccountNotFoundException extends \Exception
 {
-    protected $message = 'Account not found';
+    protected  $message = 'Account not found';
 
 }

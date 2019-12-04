@@ -16,18 +16,16 @@ class Condition
 {
 
     /**
-     * @var integer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id = 0;
 
     /**
-     * @var string
      * @ORM\Column(type="text")
      */
-    private $text;
+    private string $text = '';
 
 
     /**
@@ -50,10 +48,13 @@ class Condition
 
     /**
      * @param string $text
+     * @return Condition
      */
-    public function setText(string $text): void
+    public function setText(string $text): Condition
     {
         $this->text = $text;
+
+        return $this;
     }
 
 

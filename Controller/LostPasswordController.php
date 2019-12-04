@@ -24,6 +24,7 @@ class LostPasswordController extends AbstractController
      * @param AuthenticationInterface $authentication
      * @return Response
      * @Route("/lost-password", name="rd_authentication_lost_password")
+     * @throws \Exception
      */
     public function index(Request $request, AuthenticationInterface $authentication): Response
     {

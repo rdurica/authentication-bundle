@@ -2,7 +2,7 @@
 
 namespace Rd\AuthenticationBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManagerInterface as Em;
 use Rd\AuthenticationBundle\Entity\Condition;
 use Rd\AuthenticationBundle\Entity\User;
 use Rd\AuthenticationBundle\Form\UserType;
@@ -25,15 +25,12 @@ class RegistrationController extends AbstractController
      * @Route("/registration", name="rd_authentication_registration")
      * @param Request                 $request
      * @param AuthenticationInterface $authentication
-     * @param EntityManagerInterface  $em
+     * @param Em                      $em
      * @return Response
      * @throws \Exception
      */
-    public function index(
-        Request $request,
-        AuthenticationInterface $authentication,
-        EntityManagerInterface $em
-    ): Response {
+    public function index(Request $request, AuthenticationInterface $authentication, Em $em): Response
+    {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);

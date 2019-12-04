@@ -2,8 +2,8 @@
 
 namespace Rd\AuthenticationBundle\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Doctrine\ORM\EntityManagerInterface as Em;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Ed;
 
 /**
  * Class AbstractService
@@ -13,26 +13,18 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  */
 abstract class AbstractService
 {
+    protected Em $em;
 
-
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $em;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected Ed $eventDispatcher;
 
 
     /**
      * AbstractService constructor.
      *
-     * @param EntityManagerInterface   $em
-     * @param EventDispatcherInterface $eventDispatcher
+     * @param Em $em
+     * @param Ed $eventDispatcher
      */
-    public function __construct(EntityManagerInterface $em, EventDispatcherInterface $eventDispatcher)
+    public function __construct(Em $em, Ed $eventDispatcher)
     {
         $this->em = $em;
         $this->eventDispatcher = $eventDispatcher;

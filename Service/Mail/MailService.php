@@ -2,13 +2,16 @@
 
 namespace Rd\AuthenticationBundle\Service\Mail;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManagerInterface as Em;
 use Rd\AuthenticationBundle\Entity\User;
 use Rd\AuthenticationBundle\Service\AbstractService;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Ed;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class MailService
@@ -18,31 +21,22 @@ use Twig\Environment;
  */
 class MailService extends AbstractService implements MailInterface
 {
-    /**
-     * @var Swift_Mailer
-     */
-    private $mailer;
 
-    /**
-     * @var Environment
-     */
-    private $twig;
+    private Swift_Mailer $mailer;
+
+    private Environment $twig;
 
 
     /**
      * MailService constructor.
      *
-     * @param EntityManagerInterface   $em
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Swift_Mailer             $mailer
-     * @param Environment              $twig
+     * @param Em           $em
+     * @param Ed           $eventDispatcher
+     * @param Swift_Mailer $mailer
+     * @param Environment  $twig
      */
-    public function __construct(
-        EntityManagerInterface $em,
-        EventDispatcherInterface $eventDispatcher,
-        Swift_Mailer $mailer,
-        Environment $twig
-    ) {
+    public function __construct(Em $em, Ed $eventDispatcher, Swift_Mailer $mailer, Environment $twig)
+    {
         parent::__construct($em, $eventDispatcher);
         $this->mailer = $mailer;
         $this->twig = $twig;
@@ -53,9 +47,9 @@ class MailService extends AbstractService implements MailInterface
      * Send email about new registration + confirm hash
      *
      * @param User $user
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function registrationSuccessful(User $user): void
     {
@@ -75,9 +69,9 @@ class MailService extends AbstractService implements MailInterface
      * Send email with reset password link
      *
      * @param User $user
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function resetPassword(User $user): void
     {
@@ -97,9 +91,9 @@ class MailService extends AbstractService implements MailInterface
      * Send email if user change password
      *
      * @param User $user
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function passwordChanged(User $user): void
     {
@@ -119,9 +113,9 @@ class MailService extends AbstractService implements MailInterface
      * Send email if confirmation has was confirmed
      *
      * @param User $user
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function accountVerified(User $user): void
     {

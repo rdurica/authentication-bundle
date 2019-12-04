@@ -16,6 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AccountVerifyController extends AbstractController
 {
+
     /**
      * @Route("/confirm-account/{hash}", name="rd_authentication_confirm_account")
      * @param string                  $hash
@@ -24,7 +25,6 @@ class AccountVerifyController extends AbstractController
      */
     public function index($hash, AuthenticationInterface $authentication): RedirectResponse
     {
-
         try {
             $authentication->confirmAccount($hash);
         } catch (AccountNotFoundException $e) {

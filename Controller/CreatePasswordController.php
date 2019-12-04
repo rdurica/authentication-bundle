@@ -19,7 +19,6 @@ use Symfony\Component\Routing\Annotation\Route;
 class CreatePasswordController extends AbstractController
 {
 
-
     /**
      * @Route("/create-password/{hash}", name="rd_authentication_create_password")
      * @param string                  $hash
