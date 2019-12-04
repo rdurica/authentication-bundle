@@ -3,13 +3,12 @@
 namespace Rd\AuthenticationBundle\Service\Authentication;
 
 use DateTime;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManagerInterface as Em;
 use Rd\AuthenticationBundle\Entity\User;
 use Rd\AuthenticationBundle\Event;
-use Rd\AuthenticationBundle\Event\UserEvent;
 use Rd\AuthenticationBundle\Exception\AccountNotFoundException;
 use Rd\AuthenticationBundle\Service\AbstractService;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Ed;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -17,29 +16,23 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * Class AuthenticationService
  *
  * @author  Robert Durica <r.durica@gmail.com>
- * @package Rd\AuthenticationBundle\Service
+ * @package Rd\AuthenticationBundle\Service\Authentication
  */
 class AuthenticationService extends AbstractService implements AuthenticationInterface
 {
 
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
+    private UserPasswordEncoderInterface $passwordEncoder;
 
 
     /**
      * AuthenticationService constructor.
      *
-     * @param EntityManagerInterface       $em
-     * @param EventDispatcherInterface     $eventDispatcher
+     * @param Em                           $em
+     * @param Ed                           $eventDispatcher
      * @param UserPasswordEncoderInterface $passwordEncoder
      */
-    public function __construct(
-        EntityManagerInterface $em,
-        EventDispatcherInterface $eventDispatcher,
-        UserPasswordEncoderInterface $passwordEncoder
-    ) {
+    public function __construct(Em $em, Ed $eventDispatcher, UserPasswordEncoderInterface $passwordEncoder)
+    {
         parent::__construct($em, $eventDispatcher);
         $this->passwordEncoder = $passwordEncoder;
     }
@@ -62,7 +55,7 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
 
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(Event::REGISTRATION_SUCCEED, $event);
+        $this->eventDispatcher->dispatch($event, Event::REGISTRATION_SUCCEED);
     }
 
 
@@ -92,7 +85,7 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
         $this->em->flush();
 
         $event = new GenericEvent($user);
-        $this->eventDispatcher->dispatch(Event::ACCOUNT_VERIFIED, $event);
+        $this->eventDispatcher->dispatch($event, Event::ACCOUNT_VERIFIED);
     }
 
 
@@ -101,6 +94,7 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
      *
      * @param string $email
      * @throws AccountNotFoundException
+     * @throws \Exception
      */
     public function regeneratePassword(string $email): void
     {
@@ -123,7 +117,7 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
         $this->em->flush();
 
         $event = new GenericEvent($user);
-        $this->eventDispatcher->dispatch(Event::LOST_PASSWORD, $event);
+        $this->eventDispatcher->dispatch($event, Event::LOST_PASSWORD);
     }
 
 
@@ -144,7 +138,7 @@ class AuthenticationService extends AbstractService implements AuthenticationInt
         $this->em->flush();
 
         $event = new GenericEvent($user);
-        $this->eventDispatcher->dispatch(Event::PASSWORD_CHANGED, $event);
+        $this->eventDispatcher->dispatch($event, Event::PASSWORD_CHANGED);
     }
 
 

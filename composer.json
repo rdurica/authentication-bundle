@@ -18,11 +18,11 @@
         ]
     },
     "require": {
-        "php": "^7.1.3",
-        "symfony/form": "4.2.*",
-        "symfony/swiftmailer-bundle": "^3.1",
-        "symfony/translation": "4.2.*",
-        "symfony/twig-bundle": "4.2.*"
+        "php": "^7.4",
+        "symfony/form": "5.*",
+        "symfony/swiftmailer-bundle": "^3.4",
+        "symfony/translation": "5.*",
+        "symfony/twig-bundle": "5.*"
     },
     "version": "0.1.0"
 }

@@ -3,6 +3,7 @@
 namespace Rd\AuthenticationBundle;
 
 use Rd\AuthenticationBundle\DependencyInjection\RdAuthenticationExtension;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
@@ -13,6 +14,10 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class RdAuthenticationBundle extends Bundle
 {
+
+    /**
+     * @return RdAuthenticationExtension|ExtensionInterface|null
+     */
     public function getContainerExtension()
     {
         return new RdAuthenticationExtension();

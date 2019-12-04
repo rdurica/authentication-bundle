@@ -17,11 +17,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
 class AuthenticationSubscriber implements EventSubscriberInterface
 {
 
-
-    /**
-     * @var MailInterface
-     */
-    private $mail;
+    private MailInterface $mail;
 
 
     /**

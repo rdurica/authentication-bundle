@@ -25,73 +25,62 @@ class User implements UserInterface, Serializable, EquatableInterface
 {
 
     /**
-     * @var integer
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id = 0;
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=100, unique=true)
      */
-    private $username;
+    private string $username = '';
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=100, unique=true)
      */
-    private $email;
+    private string $email = '';
 
     /**
-     * @var string
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private string $password = '';
 
     /**
-     * @var boolean
      * @ORM\Column(type="boolean", options={"default": false})
      */
-    private $active;
+    private bool $active = true;
 
     /**
-     * @var boolean
      * @ORM\Column(type="boolean", options={"default": false})
      */
-    private $confirmed;
+    private bool $confirmed = false;
 
     /**
-     * @var string
      * @ORM\Column(type="string", options={"default": "ROLE_USER"})
      */
-    private $roles;
+    private string $roles = 'ROLE_USER';
 
     /**
-     * @var string|null
      * @ORM\Column(type="string", nullable=true, unique=false, length=255, options={"default" :null})
      */
-    private $confirmHash;
+    private ?string $confirmHash = null;
 
     /**
-     * @var string
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
-    private $plainPassword;
+    private ?string $plainPassword = null;
 
     /**
-     * @var DateTime
      * @ORM\Column(type="datetime")
      */
-    private $registrationDate;
+    private DateTime $registrationDate;
 
     /**
-     * @var integer
      * @ORM\Column(type="integer", options={"default": 0})
      */
-    private $resetPasswordCount;
+    private int $resetPasswordCount = 0;
 
 
     /**
@@ -101,12 +90,7 @@ class User implements UserInterface, Serializable, EquatableInterface
      */
     public function __construct()
     {
-        $this->roles = 'ROLE_USER';
-        $this->confirmHash = false;
-        $this->active = true;
-        $this->confirmed = false;
         $this->registrationDate = new DateTime();
-        $this->resetPasswordCount = 0;
     }
 
 
@@ -120,7 +104,7 @@ class User implements UserInterface, Serializable, EquatableInterface
 
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getUsername(): ?string
     {
@@ -358,7 +342,7 @@ class User implements UserInterface, Serializable, EquatableInterface
      */
     public function unserialize($serialized): void
     {
-        list ($this->id, $this->email, $this->password,) = unserialize($serialized, ['allowed_classes' => false]);
+        [$this->id, $this->email, $this->password,] = unserialize($serialized, ['allowed_classes' => false]);
     }
 
 

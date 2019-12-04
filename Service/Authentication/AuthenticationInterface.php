@@ -37,6 +37,7 @@ interface AuthenticationInterface
      *
      * @param string $email
      * @throws AccountNotFoundException
+     * @throws \Exception
      */
     public function regeneratePassword(string $email): void;
 
