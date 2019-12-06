@@ -29,6 +29,28 @@ class RdAuthenticationExtension extends Extension
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
+
+        $configuration = new Configuration();
+        $config = $this->processConfiguration($configuration, $configs);
+
+        $definition = $container->getDefinition('Rd\AuthenticationBundle\Service\Mail\MailService');
+
+        $definition->replaceArgument('$homepage', $config['homepage'] ?? $definition->getArgument('$homepage'));
+        $definition->replaceArgument('$from', $config['email']['from'] ?? $definition->getArgument('$from'));
+
+        $definition = $container->getDefinition('Rd\AuthenticationBundle\Controller\LoginController');
+        $background = $config['background'] ?? $definition->getArgument('$background');
+        $definition->replaceArgument('$background', $background);
+
+        $definition = $container->getDefinition('Rd\AuthenticationBundle\Controller\CreatePasswordController');
+        $definition->replaceArgument('$background', $background);
+
+        $definition = $container->getDefinition('Rd\AuthenticationBundle\Controller\LostPasswordController');
+        $definition->replaceArgument('$background', $background);
+
+        $definition = $container->getDefinition('Rd\AuthenticationBundle\Controller\RegistrationController');
+        $definition->replaceArgument('$background', $background);
+
         $this->addAnnotatedClassesToCompile([
             '**Bundle\\Controller\\',
         ]);

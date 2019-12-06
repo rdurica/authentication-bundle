@@ -1,0 +1,5 @@
+rd_authentication:
+    homepage: 'http://localhost'
+    background: 'http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg'
+    email:
+        from: 'no-reply@localhost.net'

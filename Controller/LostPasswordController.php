@@ -19,6 +19,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class LostPasswordController extends AbstractController
 {
 
+    private string $background;
+
+
+    /**
+     * LoginController constructor.
+     *
+     * @param string $background
+     */
+    public function __construct(string $background)
+    {
+        $this->background = $background;
+    }
+
+
     /**
      * @param Request                 $request
      * @param AuthenticationInterface $authentication
@@ -48,7 +62,8 @@ class LostPasswordController extends AbstractController
         }
 
         return $this->render('@RdAuthentication/lost_password.html.twig', [
-            'form' => $form->createView(),
+            'form'       => $form->createView(),
+            'background' => $this->background,
         ]);
     }
 }

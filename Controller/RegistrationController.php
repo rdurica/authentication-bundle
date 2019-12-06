@@ -21,6 +21,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegistrationController extends AbstractController
 {
 
+    private string $background;
+
+
+    /**
+     * LoginController constructor.
+     *
+     * @param string $background
+     */
+    public function __construct(string $background)
+    {
+        $this->background = $background;
+    }
+
+
     /**
      * @Route("/registration", name="rd_authentication_registration")
      * @param Request                 $request
@@ -46,6 +60,7 @@ class RegistrationController extends AbstractController
         return $this->render('@RdAuthentication/registration.html.twig', [
             'form'       => $form->createView(),
             'conditions' => $conditions,
+            'background' => $this->background,
         ]);
     }
 }

@@ -17,6 +17,20 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
 
+    private string $background;
+
+
+    /**
+     * LoginController constructor.
+     *
+     * @param string $background
+     */
+    public function __construct(string $background)
+    {
+        $this->background = $background;
+    }
+
+
     /**
      * @Route("/login", name="rd_authentication_login")
      * @param Request             $request
@@ -38,6 +52,7 @@ class LoginController extends AbstractController
         return $this->render('@RdAuthentication/login.html.twig', [
             'last_username' => $lastUsername,
             'error'         => $error,
+            'background'    => $this->background,
         ]);
     }
 

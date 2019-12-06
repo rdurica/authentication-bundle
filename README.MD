@@ -27,12 +27,12 @@ Installation
 Install bundle with 
 [Composer](http://getcomposer.org/):
 
-```sh
-$ composer require rd/authentication-bundle
+```shell script
+composer require rd/authentication-bundle
 ```
 Update
 <code>config/packages/security.yaml</code>
-``` yaml
+```yaml
 security:
     encoders:
         Rd\AuthenticationBundle\Entity\User:
@@ -59,20 +59,30 @@ security:
 
 Update 
 <code>config/packages/framework.yaml</code>
-``` yaml
+```yaml
 framework:
     secret: '%env(APP_SECRET)%'
     csrf_protection: true
 ```
 Update 
 <code>config/routes/annotation.yaml</code>
-``` yaml
+```yaml
 rd_authentication:
     resource: ../../vendor/rd/authentication-bundle/Controller/
     type: annotation
 ```
 
 Update database schema
-```sh
-$ bin/console doctrine:schema:update --force
+```shell script
+bin/console doctrine:schema:update --force
+```
+
+Configuration needed for live usage
+<code>config/packages/rd_authentication.yaml</code>
+```yaml
+rd_authentication:
+  homepage: 'http://localhost'
+  background: 'http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg'
+  email:
+    from: 'no-reply@localhost.net'
 ```

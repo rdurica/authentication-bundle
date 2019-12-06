@@ -18,6 +18,19 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CreatePasswordController extends AbstractController
 {
+    private string $background;
+
+
+    /**
+     * LoginController constructor.
+     *
+     * @param string $background
+     */
+    public function __construct(string $background)
+    {
+        $this->background = $background;
+    }
+
 
     /**
      * @Route("/create-password/{hash}", name="rd_authentication_create_password")
@@ -54,7 +67,8 @@ class CreatePasswordController extends AbstractController
         }
 
         return $this->render('@RdAuthentication/create_password.html.twig', [
-            'form' => $form->createView(),
+            'form'       => $form->createView(),
+            'background' => $this->background,
         ]);
     }
 }

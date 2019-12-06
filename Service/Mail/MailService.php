@@ -26,6 +26,10 @@ class MailService extends AbstractService implements MailInterface
 
     private Environment $twig;
 
+    private string $homepage;
+
+    private string $from;
+
 
     /**
      * MailService constructor.
@@ -34,12 +38,22 @@ class MailService extends AbstractService implements MailInterface
      * @param Ed           $eventDispatcher
      * @param Swift_Mailer $mailer
      * @param Environment  $twig
+     * @param string       $homepage
+     * @param string       $from
      */
-    public function __construct(Em $em, Ed $eventDispatcher, Swift_Mailer $mailer, Environment $twig)
-    {
+    public function __construct(
+        Em $em,
+        Ed $eventDispatcher,
+        Swift_Mailer $mailer,
+        Environment $twig,
+        string $homepage,
+        string $from
+    ) {
         parent::__construct($em, $eventDispatcher);
         $this->mailer = $mailer;
         $this->twig = $twig;
+        $this->homepage = $homepage;
+        $this->from = $from;
     }
 
 
@@ -55,7 +69,7 @@ class MailService extends AbstractService implements MailInterface
     {
         $message = new Swift_Message();
         $message->setSubject('Registration successful')
-                ->setFrom('test@test.net')
+                ->setFrom($this->from)
                 ->setTo($user->getEmail())
                 ->setBody($this->twig->render('@RdAuthentication/mail/registration_successful.html.twig', [
                     'user' => $user,
@@ -77,7 +91,7 @@ class MailService extends AbstractService implements MailInterface
     {
         $message = new Swift_Message();
         $message->setSubject('Reset password')
-                ->setFrom('test@test.net')
+                ->setFrom($this->from)
                 ->setTo($user->getEmail())
                 ->setBody($this->twig->render('@RdAuthentication/mail/reset_password.html.twig', [
                     'user' => $user,
@@ -99,7 +113,7 @@ class MailService extends AbstractService implements MailInterface
     {
         $message = new Swift_Message();
         $message->setSubject('Password changed')
-                ->setFrom('test@test.net')
+                ->setFrom($this->from)
                 ->setTo($user->getEmail())
                 ->setBody($this->twig->render('@RdAuthentication/mail/password_changed.html.twig', [
                     'user' => $user,
@@ -121,7 +135,7 @@ class MailService extends AbstractService implements MailInterface
     {
         $message = new Swift_Message();
         $message->setSubject('Account verified')
-                ->setFrom('test@test.net')
+                ->setFrom($this->from)
                 ->setTo($user->getEmail())
                 ->setBody($this->twig->render('@RdAuthentication/mail/account_verified.html.twig', [
                     'user' => $user,

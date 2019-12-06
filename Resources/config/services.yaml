@@ -7,7 +7,26 @@ services:
     Rd\AuthenticationBundle\Controller\:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
-
+    Rd\AuthenticationBundle\Controller\LoginController:
+        tags: ['controller.service_arguments']
+        arguments:
+            $background: 'http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg'
+    Rd\AuthenticationBundle\Controller\RegistrationController:
+        tags: ['controller.service_arguments']
+        arguments:
+            $background: 'http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg'
+    Rd\AuthenticationBundle\Controller\LostPasswordController:
+        tags: ['controller.service_arguments']
+        arguments:
+            $background: 'http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg'
+    Rd\AuthenticationBundle\Controller\CreatePasswordController:
+        tags: ['controller.service_arguments']
+        arguments:
+            $background: 'http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg'
+    Rd\AuthenticationBundle\Service\Mail\MailService:
+        arguments:
+            $homepage: 'http://localhost'
+            $from: 'no-reply@localhost.net'
     # Subscribers
     Rd\AuthenticationBundle\EventSubscriber\AuthenticationSubscriber:
         tags: ['kernel.event_subscriber']
